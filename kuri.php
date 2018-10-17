@@ -100,7 +100,7 @@
 				}	
 			
 				if ($func)
-					return array('class'=>$cname, 'func'=>$func, 'args'=>$args);
+					return array('class'=>$control, 'func'=>$func, 'args'=>$args);
 			}
 			
 			define('KURI_CNAME', $cname);
@@ -122,22 +122,48 @@
 					
 			return array('class'=>False, 'func'=>$func, 'args'=>$args);	
 		}
+
 		function kuload($cname, $p = ''){
-			if (!class_exists($cname)) {
-				$cfile = 'app'.DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$cname.'.php';
-				if (file_exists($cfile)) 
-					require ($cfile);
-				else
-					return False;
-			}
-			return new $cname();
+
+            $class = kuri_load_class($cname);
+
+            if (isset($class))
+                return $class;
+
+
+            if (defined(APPPATH))
+                $path_load = APPPATH;
+            else
+                $path_load = 'app/';
+
+            $cfile = $path_load.'controllers'.DIRECTORY_SEPARATOR.$cname.DIRECTORY_SEPARATOR.$cname.'.php';
+
+
+            if (file_exists($cfile)) {
+                require($cfile);
+                return kuri_load_class($cname);
+            }
+
+            return null;
+
+
 		}
+
+		function kuri_load_class($cname){
+
+            if (class_exists($cname))
+                return new $cname();
+
+            return null;
+
+        }
 		
 		/**
 		* Base load controller class in 
 		*/
 		function kucontroller($cname, $path){
-			if ($path == null)
+
+		    if ($path == null)
 				$path = 'app'.DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR;
 			
 			if (!class_exists($cname)) {
@@ -198,7 +224,7 @@
 		}
 		
 		function kuloadfunc($func, $class = False, $args = array()) {
-			
+
 			if ($class == False) {
 				if (is_array($args) and sizeof($args) > 0)
 					return call_user_func_array($func, $args);
@@ -206,7 +232,8 @@
 					return call_user_func($func);
 			}
 			else {
-				if (is_array($args) and sizeof($args) > 0)
+
+			    if (is_array($args) and sizeof($args) > 0)
 					return call_user_func_array(array($class, $func), $args);
 				else
 					return call_user_func(array($class, $func));
