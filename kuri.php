@@ -310,7 +310,7 @@
 
 			if (!function_exists('action')) {
 		        function action($url = null, $prefix = '', $autotype = 'html') {
-		            return kuri($url = null, $prefix = '', $autotype = 'html');
+		            return kuri($url, $prefix, $autotype);
                 }
 		    }
 		
