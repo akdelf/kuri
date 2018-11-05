@@ -37,7 +37,7 @@
 		/**
 		* current url (k - current url)
 		*/
-		function kuri() {
+		function kurl() {
 			
 			
 			if (isset($_SERVER['REQUEST_URI']) and $_SERVER['REQUEST_URI'] !== '')
@@ -271,14 +271,14 @@
 			return null;
        	
        	}
-		
 
-		if (!function_exists('action')) {
+
+
 			
-			function action($url = null, $prefix = '', $autotype = 'html'){
+			function kuri($url = null, $prefix = '', $autotype = 'html'){
 			
 				if ($url == null)
-					$url = kuri();
+					$url = kurl();
 				$params = kuparser($url);
 				
 				$result = kufind($params['items'], $params['method'], $prefix);
@@ -305,8 +305,14 @@
 						return call_user_func('err404');	
 				}
 				
-			}	
-		}		
+			}
+
+
+			if (!function_exists('action')) {
+		        function action($url = null, $prefix = '', $autotype = 'html') {
+		            return kuri($url = null, $prefix = '', $autotype = 'html');
+                }
+		    }
 		
 		
 		
