@@ -275,7 +275,7 @@
 
 
 			
-			function kuri($url = null, $prefix = '', $autotype = 'html'){
+			function kuri($url = null, $prefix = '_kuri', $autotype = 'html'){
 			
 				if ($url == null)
 					$url = kurl();
