@@ -1,4 +1,5 @@
-<?php 
+<?php declare(strict_types=1);
+
 		/**
 		* kURI: return scheme, host, path, controller, action, items, http method 
 		* @license http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -26,7 +27,7 @@
 			/* определяем путь относительно url */
 			if ($result['path'] !== '/') {
 					$result['items'] = explode('/', trim($result['path'], '/'));
-				}
+			}
 			
 			
 			$result['method'] = $_SERVER['REQUEST_METHOD'];
@@ -217,7 +218,7 @@
 				$args = $items;
 			}	
 			else
-				return $this->er404();
+				return err404_kuri();
 					
 			return array('class'=>False, 'func'=>$func, 'args'=>$arguments);	
 					
@@ -226,8 +227,47 @@
 		function kuloadfunc($func, $class = False, $args = array()) {
 
 			if ($class == False) {
-				if (is_array($args) and sizeof($args) > 0)
-					return call_user_func_array($func, $args);
+
+			    $arg_count = sizeof($args);
+
+			    if (is_array($args) and $arg_count > 0) {
+                    $realparams = kuri_real_params($func);
+
+                    if ($arg_count > sizeof($realparams))
+                        return err404_kuri();
+
+
+                    for ($i = 0; $i < $arg_count; $i++) {
+
+                        if ($realparams[$i] == 'int') {
+                            $valid = filter_var($args[$i], FILTER_VALIDATE_INT);
+                        }
+                        elseif ($realparams[$i] == 'boolean') {
+                            $valid = filter_var($args[$i], FILTER_VALIDATE_BOOLEAN);
+                        }
+                        elseif ($realparams[$i] == 'float') {
+                            $valid = filter_var($args[$i], FILTER_VALIDATE_FLOAT);
+                        }
+                        else
+                            $valid = $args[$i];
+
+                        if ($valid){
+                            $params[$i] = $valid;
+                        }
+                        else {
+                            return err404_kuri();
+                        }
+
+                    }
+
+                    try {
+                        return call_user_func_array($func, $params);
+                    }
+                    catch (Error $e) {
+                        return err404_kuri();
+                    }
+
+                }
 				else
 					return call_user_func($func);
 			}
@@ -239,6 +279,28 @@
 					return call_user_func(array($class, $func));
 			}	
 		}
+
+
+        function kuri_real_params($func){
+
+            $reflectionFunc = new ReflectionFunction($func);
+            $reflectionParams = $reflectionFunc->getParameters();
+
+            foreach ($reflectionParams as $key=>$refparam) {
+
+                $name = (string)$refparam->getName();
+
+                if ($refparam->hasType())
+                    $type = (string)$refparam->getType();
+                else
+                    $type = 'string';
+
+                $params[$key] = $type;
+            }
+
+            return $params;
+
+        }
 		
 				
 		
@@ -298,11 +360,7 @@
 						return false;
 				}
 				else {
-					if (!function_exists('err404')) {
-						echo '404 no find page';
-					}
-					else
-						return call_user_func('err404');	
+					err404_kuri();
 				}
 				
 			}
@@ -313,6 +371,7 @@
 		            return kuri($url, $prefix, $autotype);
                 }
 		    }
+
 		
 		
 		
