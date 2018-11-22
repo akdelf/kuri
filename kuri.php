@@ -218,7 +218,7 @@
 				$args = $items;
 			}	
 			else
-				return err404_kuri();
+				return kuri_http_error(404);
 					
 			return array('class'=>False, 'func'=>$func, 'args'=>$arguments);	
 					
@@ -234,7 +234,7 @@
                     $realparams = kuri_real_params($func);
 
                     if ($arg_count > sizeof($realparams))
-                        return err404_kuri();
+                        return kuri_http_error(404);
 
 
                     for ($i = 0; $i < $arg_count; $i++) {
@@ -255,7 +255,7 @@
                             $params[$i] = $valid;
                         }
                         else {
-                            return err404_kuri();
+                            return kuri_http_error(404);
                         }
 
                     }
@@ -264,7 +264,7 @@
                         return call_user_func_array($func, $params);
                     }
                     catch (Error $e) {
-                        return err404_kuri();
+                        return kuri_http_error(404);
                     }
 
                 }
@@ -336,6 +336,22 @@
 
 
 
+       	/**
+       	*  http error
+       	*/
+       	function kuri_http_error($error){
+
+       		if ($error == 404){
+       			if (function_exists('err404_kuri'))
+       				return err404_kuri();
+       			else {
+       				header("HTTP/1.0 404 Not Found");
+       			    die('PAGE NOT FOUND');
+       			}
+
+       		}
+       	}
+       	
 			
 			function kuri($url = null, $prefix = '_kuri', $autotype = 'html'){
 			
@@ -360,7 +376,7 @@
 						return false;
 				}
 				else {
-					err404_kuri();
+					kuri_http_error(404);
 				}
 				
 			}
