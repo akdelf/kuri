@@ -1,5 +1,6 @@
 ## _kuri
 add prefix kuri for your functions
+http://{your function}/param1/param2
 
 
 PHP >= 5.2.0
