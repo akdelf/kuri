@@ -1,7 +1,7 @@
 {
-    "name": "masterforweb/kuri",
+    "name": "masterforweb/_kuri",
     "description": "Autorouting without regular. MVC standart role: controller/action/params. Quick start",
-    "homepage": "https://github.com/masterforweb/kuri",
+    "homepage": "https://github.com/masterforweb/_kuri",
     "keywords": ["microframework","rest","router","php quick start"],
     "type": "library",
     "license": "MIT",
@@ -15,6 +15,6 @@
 		"php": ">=5.2"
 	},
     "autoload": {
-        "files": ["kuri.php"]
+        "files": ["_kuri.php"]
     }
 }
