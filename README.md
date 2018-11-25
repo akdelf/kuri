@@ -1,6 +1,11 @@
 ## _kuri
-add prefix kuri for your functions
+add postfix kuri for your function
+
 http://{your function}/param1/param2
+
+kuri_ [prefix system functions and plugins]
+
+_kuri [postfix user functions]
 
 
 PHP >= 5.2.0
