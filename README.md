@@ -1,4 +1,6 @@
 ## _kuri
+add prefix kuri for your functions
+
 
 PHP >= 5.2.0
 
@@ -38,7 +40,7 @@ require 'vendor/akdelf/kuri/kuri.php';
 $app = new kURI();
 
 
-class news {
+class news_kuri {
 	
 	function id($id){
 		echo 'ID ='.$id;
@@ -52,7 +54,7 @@ class news {
 require 'vendor/akdelf/kuri/kuri.php';
 $result = action();
 
-class news {
+class news_kuri {
 	
 	function get($id){
 		echo 'ID ='.$id;
