@@ -6,9 +6,10 @@
 		* @author АК Delfin <masterforweb@hotmail.com>
 		*/
 		
-		function kuparser($uri = '') {
-			$result = array();
-			
+		function kuri_parser($uri = '') {
+
+		    $result = array();
+
 			$result = parse_url(urldecode($uri));
 
 			if ($_SERVER['PHP_SELF'] !== '')
@@ -34,7 +35,30 @@
 			
 			return $result;
 		}
-		
+
+
+		function kuri_argv($argv){
+
+		    if (isset($argv)) {
+
+		        $items = $_SERVER['argv'];
+
+		        $result['script'] = array_shift($items);
+		        $result['method'] = 'command';
+		        $result['items'] = $items;
+
+		        return $result;
+
+            }
+
+		    return null;
+
+        }
+
+
+
+
+
 		/**
 		* current url (k - current url)
 		*/
@@ -45,6 +69,8 @@
 				$uri = $_SERVER['REQUEST_URI'];
 			elseif(isset($_SERVER['PATH_INFO']) and $_SERVER['PATH_INFO'] !== '')
 				$uri = $_SERVER['PATH_INFO'];
+			else
+			    return False;
 
 			
 			/*get query*/
@@ -87,7 +113,8 @@
 			$cname .= $prefix;
 
 
-			if ($control = kuload($cname)){ //autoload class
+			/**
+             * if ($control = kuload($cname)){ //autoload class
 				
 				if (method_exists($control, $action)){
 					if ($size > 2)
@@ -104,7 +131,9 @@
 					return array('class'=>$control, 'func'=>$func, 'args'=>$args);
 			}
 			
-			define('KURI_CNAME', $cname);
+			define('KURI_CNAME', $cname); **/
+
+
 			
 			$func_temp = str_replace('-', '_', $cname);
 			
@@ -178,7 +207,7 @@
 		}
 		
 		
-		function kufindfunc($items = array(), $method = "get") {
+		function kufindfunc($items = array(), $method = 'GET') {
 			$size = sizeof($items);
 			$action = 'index';
 			
@@ -354,11 +383,21 @@
        	
 			
 			function _kuri($url = null, $prefix = '_kuri', $autotype = 'html'){
-			
-				if ($url == null)
-					$url = kurl();
-				$params = kuparser($url);
-				
+
+                $url = kurl();
+
+
+                if ($url !== FALSE) {
+                    $params = kuri_parser($url);
+                }
+                else {
+                    $params = kuri_argv($_SERVER['argv']);
+                }
+
+
+                if (!is_array($params))
+                    return kuri_http_error(404);
+
 				$result = kufind($params['items'], $params['method'], $prefix);
 
 				if (is_array($result)) {
