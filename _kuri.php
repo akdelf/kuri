@@ -368,17 +368,15 @@
        	/**
        	*  http error
        	*/
-       	function kuri_http_error($error){
+       	function kuri_http_error($code){
 
-       		if ($error == 404){
-       			if (function_exists('err404_kuri'))
-       				return err404_kuri();
-       			else {
-       				header("HTTP/1.0 404 Not Found");
-       			    die('PAGE NOT FOUND');
-       			}
+       	    $errfunc = "kuri_$code";
 
-       		}
+       	    if (function_exists($errfunc))
+       				return $errfunc();
+       	    else
+       	        http_response_code($code);
+
        	}
 
 
