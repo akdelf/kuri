@@ -393,10 +393,13 @@
                     $protocol = 'http://';
 
                 define('SITE', $protocol.$_SERVER['HTTP_HOST'].'/');
+                define('SITEPATH', $_SERVER['DOCUMENT_ROOT'].'/');
 
             }
+            else {
+                define('SITEPATH', $_SERVER['PWD'].'/');
+            }
 
-            define('SITEPATH', $_SERVER['DOCUMENT_ROOT'].'/');
             define('APPPATH', SITEPATH.'app/');
 
             return True;
