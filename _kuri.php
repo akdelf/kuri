@@ -380,6 +380,28 @@
 
        		}
        	}
+
+
+       	//add define SITE, SITEPATH and APPPATH
+       	function kuri_define(){
+
+            if (isset($_SERVER['SERVER_PORT']) and isset($_SERVER['HTTP_HOST'])) {
+
+                if ($_SERVER['SERVER_PORT'] == 443 OR $_SERVER['HTTPS'] == 'on')
+                    $protocol = 'https://';
+                else
+                    $protocol = 'http://';
+
+                define('SITE', $protocol.$_SERVER['HTTP_HOST'].'/');
+
+            }
+
+            define('SITEPATH', $_SERVER['DOCUMENT_ROOT'].'/');
+            define('APPPATH', SITEPATH.'app/');
+
+            return True;
+
+        }
        	
 			
 			function _kuri($url = null, $prefix = '_kuri', $autotype = 'html'){
