@@ -427,7 +427,7 @@
 				
 					if ($result['func'] !== '') { 
 						$data =  kuloadfunc($result['func'], $result['class'], $result['args']);
-						if ($autotype == 'json' AND is_array($data)){
+						if (is_array($data)){
 							header("Content-type:application/json");
 							echo json_encode($data);
 						}
