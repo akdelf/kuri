@@ -150,7 +150,7 @@
 			else
 				return False;
 					
-			return array('class'=>False, 'func'=>$func, 'args'=>$args);	
+			return array('class'=>False, 'func'=>$func, 'args'=>$args, 'cname'=>$cname);
 		}
 
 		function kuload($cname, $p = ''){
@@ -249,7 +249,7 @@
 			else
 				return kuri_http_error(404);
 					
-			return array('class'=>False, 'func'=>$func, 'args'=>$arguments);	
+			return array('class'=>False, 'func'=>$func, 'args'=>$arguments);
 					
 		}
 		
@@ -405,9 +405,13 @@
         }
        	
 			
-			function _kuri($url = null, $prefix = '_kuri', $autotype = 'html'){
+			function _kuri($currurl = null, $prefix = '_kuri', $autotype = 'html'){
 
-                $url = kurl();
+                if ($currurl == null) {
+                    $url = kurl();
+                }
+                else
+                    $url = $currurl;
 
 
                 if ($url !== FALSE) {
@@ -422,6 +426,11 @@
                     return kuri_http_error(404);
 
 				$result = kufind($params['items'], $params['method'], $prefix);
+
+
+				if ($currurl == null) {
+				    define('KURI_CNAME', $result['cname']);
+                }
 
 				if (is_array($result)) {
 				
