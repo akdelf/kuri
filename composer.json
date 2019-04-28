@@ -1,5 +1,5 @@
 {
-    "name": "masterforweb/_kuri",
+    "name": "masterforweb/kuri",
     "description": "Autorouting without regular. MVC standart role: controller/action/params. Quick start",
     "homepage": "https://github.com/masterforweb/_kuri",
     "keywords": ["microframework","rest","router","php quick start"],
