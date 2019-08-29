@@ -437,8 +437,8 @@
 					if ($result['func'] !== '') { 
 						$data =  kuloadfunc($result['func'], $result['class'], $result['args']);
 						if (is_array($data)){
-							header("Content-type:application/json");
-							echo json_encode($data);
+							header('Content-Type: application/json; charset=utf-8');
+							echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 						}
 						else	
 							return $data;		
