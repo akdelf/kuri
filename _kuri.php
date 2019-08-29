@@ -12,7 +12,9 @@
 
 			$result = parse_url(urldecode($uri));
 
-			if ($_SERVER['PATH_INFO'])
+			if (isset(['REQUEST_URI'])
+			    $spath = $_SERVER['REQUEST_URI'];
+			elseif(isset($_SERVER['PATH_INFO'])
 				$spath = $_SERVER['PATH_INFO'];
 			elseif ($_SERVER['PHP_SELF'] !== '')
 			   	$spath = $_SERVER['PHP_SELF'];
