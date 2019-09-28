@@ -409,7 +409,7 @@
         }
        	
 			
-			function _kuri($currurl = null, $prefix = '_kuri', $autotype = 'html'){
+			function _kuri($currurl = null, $prefix = '_', $autotype = 'html'){
 
                 if ($currurl == null) {
                     $url = kurl();
