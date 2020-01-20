@@ -12,12 +12,8 @@
 
 			$result = parse_url(urldecode($uri));
 
-			if (isset($_SERVER['REQUEST_URI']))
-			    $spath = $_SERVER['REQUEST_URI'];
-			elseif(isset($_SERVER['PATH_INFO']))
-				$spath = $_SERVER['PATH_INFO'];
-			elseif ($_SERVER['PHP_SELF'] !== '')
-			   	$spath = $_SERVER['PHP_SELF'];
+			if ($_SERVER['PHP_SELF'] !== '')
+			   $spath = $_SERVER['PHP_SELF'];
 			elseif ($_SERVER['SCRIPT_NAME'] !== '')
 				$spath = $_SERVER['SCRIPT_NAME'];
 			
@@ -409,7 +405,7 @@
         }
        	
 			
-			function _kuri($currurl = null, $prefix = '_', $autotype = 'html'){
+			function _kuri($currurl = null, $prefix = '_kuri', $autotype = 'html'){
 
                 if ($currurl == null) {
                     $url = kurl();
