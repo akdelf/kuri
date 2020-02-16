@@ -98,11 +98,13 @@
 		* find controller (k - controller)
 		*/
 		function kufind($items = array(), $method = 'get', $prefix = ''){
+			
 			$size = sizeof($items);
+			
 			$action = 'index';
 			
 			if ($size == 0) {// mainpage
-				$cname = 'main';
+				$cname = 'index';
 			}	
 			else {
 				$cname = array_shift($items); //title action
@@ -112,9 +114,8 @@
 
 			$cname .= $prefix;
 
-
-			/**
-             * if ($control = kuload($cname)){ //autoload class
+	
+			if ($control = kuload($cname)){ //autoload class
 				
 				if (method_exists($control, $action)){
 					if ($size > 2)
@@ -131,7 +132,7 @@
 					return array('class'=>$control, 'func'=>$func, 'args'=>$args);
 			}
 			
-			define('KURI_CNAME', $cname); **/
+			define('KURI_CNAME', $cname);
 
 
 			
@@ -155,7 +156,7 @@
 
 		function kuload($cname, $p = ''){
 
-            $class = kuri_load_class($cname);
+			$class = kuri_load_class($cname);
 
             if (isset($class))
                 return $class;
@@ -166,7 +167,7 @@
             else
                 $path_load = 'app/';
 
-            $cfile = $path_load.'controllers'.DIRECTORY_SEPARATOR.$cname.DIRECTORY_SEPARATOR.$cname.'.php';
+            $cfile = $path_load.'routes'.DIRECTORY_SEPARATOR.$cname.DIRECTORY_SEPARATOR.$cname.'.php';
 
 
             if (file_exists($cfile)) {
