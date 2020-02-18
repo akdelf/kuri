@@ -350,6 +350,23 @@
         	return trim(ob_get_clean());
         	
        	}
+
+	set_error_handler('kuri_error');
+
+	
+	//обработка ошибок внутри view
+	function kuri_error($errno, $errstr, $errfile, $errline){
+		
+		if ($errno == E_RECOVERABLE_ERROR){
+			$str = "VIEW: <b>E_RECOVERABLE_ERROR<b> $errstr FILE: $errfile  LINE:  $errline<br>";
+			echo $str;
+		}  
+
+		return False;
+	
+	}
+
+
        	function set($name = null, $value = null) {
        		static $vars = array();
        		if ($name == null)
