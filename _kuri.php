@@ -114,6 +114,8 @@
 
 			$cname .= $prefix;
 
+			
+
 	
 			if ($control = kuload($cname)){ //autoload class
 				
@@ -441,13 +443,16 @@
 
 
                 if (!is_array($params))
-                    return kuri_http_error(404);
-
-				$result = kufind($params['items'], $params['method'], $prefix);
+					return kuri_http_error(404);
+					
+				if (isset($params['items']))	
+					$result = kufind($params['items'], $params['method'], $prefix);
+				else
+				$result = kufind(array(), $params['method'], $prefix);	
 
 
 				if ($currurl == null) {
-				    define('KURI_CNAME', $result['cname']);
+				    //define('KURI_CNAME', $result['cname']);
                 }
 
 				if (is_array($result)) {
