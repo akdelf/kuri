@@ -463,6 +463,11 @@
 							header('Content-Type: application/json; charset=utf-8');
 							echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 						}
+						elseif (is_string($data)){
+							header('Content-type: text/html; charset=utf-8');
+							echo $data;
+						}	
+							
 						else	
 							return $data;		
 					}
