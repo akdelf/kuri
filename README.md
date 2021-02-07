@@ -1,4 +1,15 @@
-## _kuri
+# _kuri
+
+
+
+## Installation
+
+It's recommended that you use [Composer](https://getcomposer.org/) to install Kuri.
+
+```bash
+$ composer require masterforweb/kuri
+```
+
 add postfix kuri for your function
 
 http://{your function}/param1/param2
@@ -28,16 +39,18 @@ RETURN:
  - SHORT FUNC: find function $control 
 
 
-[EXAMPLE FUNCTION]
+## Hello World
 
-require 'vendor/akdelf/kuri/kuri.php';
+```php
+
+require 'vendor/autoload.php';
 $app = new kURI();
 $app->action();
 
-function main() {
-	echo 'mainpage';	
+function index() {
+	echo 'Hello World! Is index page';	
 }
-
+```
 
 [EXAMPLE MVC CLASS]
 path: domain.my/news/id/$id
