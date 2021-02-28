@@ -1,5 +1,7 @@
 # _kuri
 
+not a monstrous framework
+
 
 
 ## Installation
